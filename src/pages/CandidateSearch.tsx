@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { searchGithub, searchGithubUser } from '../api/API';
 import Candidate from '../interfaces/Candidate.interface';
+import '../assets/CandidateSearch.css'
 
 interface Login {
   login: string;
@@ -57,6 +58,10 @@ const CandidateSearch = () => {
       <h1>Candidate Search</h1>
       <ul>
         {Object.entries(candidate).map((attr) => <li key={attr[0]}>{attr[0]}: {attr[1]}</li>)}
+        <div id="buttons">
+          <button id="minus"><a href="">-</a></button>
+          <button id="plus">+</button>
+        </div>
       </ul>
     </>
   );
