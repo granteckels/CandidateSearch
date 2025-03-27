@@ -7,6 +7,8 @@ interface Login {
   login: string;
 }
 
+let dataIndex = 0;
+
 const CandidateSearch = () => {
   const [data, setData] = useState([]);
   const [candidate, setCandidate] = useState({
@@ -38,8 +40,14 @@ const CandidateSearch = () => {
   useEffect(() => {
     if(data.length === 0) { return; }
 
-    searchGithubUser(data[0]).then((res) => {
-      console.log('[data]');
+    getNextCandidate();
+  }, [data]);
+
+  function getNextCandidate() {
+    searchGithubUser(data[dataIndex]).then((res) => {
+      // Check if res is empty
+      if(JSON.stringify(res) === '{}') { return }
+
       console.log("res: ", res)
 
       const candidate = candidateKeys.reduce((acc, key) => {
@@ -51,16 +59,28 @@ const CandidateSearch = () => {
       console.log(Object.entries(candidate));
       setCandidate(candidate);
     });
-  }, [data]);
+
+    dataIndex++;
+    console.log(dataIndex);
+  }
+
+  function addCandidate() {
+    const candidates = JSON.parse(localStorage.getItem("candidates") ?? "[]")
+    if(dataIndex < data.length) { candidates.push(candidate) };
+    localStorage.setItem("candidates", JSON.stringify(candidates));
+    getNextCandidate();
+  }
 
   return (
     <>
       <h1>Candidate Search</h1>
+      <p>data.length: {data.length}</p>
+      <p>dataIndex: {dataIndex}</p>
       <ul>
         {Object.entries(candidate).map((attr) => <li key={attr[0]}>{attr[0]}: {attr[1]}</li>)}
         <div id="buttons">
-          <button id="minus"><a href="">-</a></button>
-          <button id="plus">+</button>
+          <button id="minus" onClick={getNextCandidate}>-</button>
+          <button id="plus" onClick={addCandidate}>+</button>
         </div>
       </ul>
     </>
