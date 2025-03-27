@@ -11,15 +11,7 @@ let dataIndex = 0;
 
 const CandidateSearch = () => {
   const [data, setData] = useState([]);
-  const [candidate, setCandidate] = useState({
-    name: null,
-    login: null,
-    location: null,
-    avatar: null,
-    email: null,
-    html_url: null,
-    company: null,
-  } as Candidate);
+  const [candidate, setCandidate] = useState({} as Candidate);
 
   const candidateKeys = [
     "name",
@@ -48,20 +40,15 @@ const CandidateSearch = () => {
       // Check if res is empty
       if(JSON.stringify(res) === '{}') { return }
 
-      console.log("res: ", res)
-
       const candidate = candidateKeys.reduce((acc, key) => {
         acc[key as keyof Candidate] = res[key];
         return acc;
       }, {} as Candidate);
 
-      console.log("candidate: ", candidate);
-      console.log(Object.entries(candidate));
       setCandidate(candidate);
     });
 
     dataIndex++;
-    console.log(dataIndex);
   }
 
   function addCandidate() {

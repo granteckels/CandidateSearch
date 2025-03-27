@@ -94,6 +94,11 @@ tbody tr:nth-child(odd) {
   background-color: #333333;
 }
 
+td {
+  text-align: center;
+  word-wrap: break-word;
+}
+
 .nav {
   display: flex;
   justify-content: center;

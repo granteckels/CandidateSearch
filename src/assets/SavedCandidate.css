@@ -1,9 +1,4 @@
-#buttons {
-    display: flex;
-    justify-content: space-between;
-}
-
-#buttons button {
+td button {
     /* Center text */
     display: flex;
     align-items: center;
@@ -14,14 +9,19 @@
     height: 1.5em;
 
     border-radius: 50%;
+    background-color: red;
     color: black;
     font-size: 2em;
+
+    margin: 0 auto;
 }
 
-button#minus {
-    background-color: red;
+img.tableAvatar {
+  width: 80px;
+  height: 80px;
 }
 
-button#plus {
-    background-color: green;
+img.gitHubLogo {
+  width: 50px;
+  height: 50px;
 }
