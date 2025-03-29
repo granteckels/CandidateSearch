@@ -30,6 +30,7 @@ const CandidateSearch = () => {
   }, [])
 
   useEffect(() => {
+    // Sometimes initial searchGithub won't return any data
     if(data.length === 0) { return; }
 
     getNextCandidate();
@@ -40,6 +41,7 @@ const CandidateSearch = () => {
       // Check if res is empty
       if(JSON.stringify(res) === '{}') { return }
 
+      // Only gets attributes we want from res
       const candidate = candidateKeys.reduce((acc, key) => {
         acc[key as keyof Candidate] = res[key];
         return acc;
@@ -61,15 +63,24 @@ const CandidateSearch = () => {
   return (
     <>
       <h1>Candidate Search</h1>
-      <p>data.length: {data.length}</p>
-      <p>dataIndex: {dataIndex}</p>
-      <ul>
-        {Object.entries(candidate).map((attr) => <li key={attr[0]}>{attr[0]}: {attr[1]}</li>)}
+      <div id="card">
+        <div className="avatar">
+          <img src={candidate.avatar_url!} />
+        </div>
+        <div className="info">
+          <ul>
+            <li key="name">{candidate.name} ({candidate.login})</li>
+            <li key="email">Email: {candidate.email}</li>
+            <li key="company">Company: {candidate.company}</li>
+            <li key="location">Location: {candidate.location}</li>
+            <li key="html_url">GitHub: <a href={candidate.html_url ?? ""}>{candidate.html_url ?? ""}</a></li>
+          </ul>
+        </div>
         <div id="buttons">
           <button id="minus" onClick={getNextCandidate}>-</button>
           <button id="plus" onClick={addCandidate}>+</button>
         </div>
-      </ul>
+      </div>
     </>
   );
 };
